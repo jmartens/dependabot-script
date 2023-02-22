@@ -15,14 +15,15 @@ require "dependabot/config/file_fetcher"
 
 $stdout.sync = true
 
-credentials = [
-  {
-    "type" => "git_source",
-    "host" => "github.com",
-    "username" => "x-access-token",
-    "password" => ENV["GITHUB_ACCESS_TOKEN"] # A GitHub access token with read access to public repos
-  }
-]
+# Get optional credentials from the environment variable called CREDENTIALS (json array).
+credentials = JSON.parse(ENV["CREDENTIALS"] || "[]")
+
+credentials << {
+  "type" => "git_source",
+  "host" => "github.com",
+  "username" => "x-access-token",
+  "password" => ENV["GITHUB_ACCESS_TOKEN"] # A GitHub access token with read access to public repos
+}
 
 # Full name of the repo you want to create pull requests for.
 repo_name = ENV["PROJECT_PATH"] # namespace/project
