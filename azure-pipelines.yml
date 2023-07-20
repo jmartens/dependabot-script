@@ -29,6 +29,10 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
+      inputs:
+        containerRegistry: 'jmartens_dockerhub'
+        command: 'login'
+    - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
